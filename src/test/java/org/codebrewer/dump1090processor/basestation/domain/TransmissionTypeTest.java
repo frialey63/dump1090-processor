@@ -26,7 +26,7 @@ import static org.codebrewer.dump1090processor.basestation.domain.TransmissionTy
 import static org.codebrewer.dump1090processor.basestation.domain.TransmissionType.SURVEILLANCE_ID;
 import static org.codebrewer.dump1090processor.basestation.domain.TransmissionType.getByRawValue;
 
-import org.codebrewer.dump1090processor.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TransmissionTypeTest {
