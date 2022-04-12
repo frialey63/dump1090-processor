@@ -13,7 +13,7 @@ buildscript {
 }
 
 plugins {
-  id 'org.assertj.generator' version '0.0.6b'
+//  id 'org.assertj.generator' version '0.0.6b'
 }
 
 apply plugin: 'java'
@@ -25,14 +25,14 @@ group = 'org.codebrewer'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
-sourceSets {
-  main {
-    java {
-      assertJ {
-      }
-    }
-  }
-}
+//sourceSets {
+//  main {
+//    java {
+//      assertJ {
+//      }
+//    }
+//  }
+//}
 
 repositories {
   mavenCentral()
