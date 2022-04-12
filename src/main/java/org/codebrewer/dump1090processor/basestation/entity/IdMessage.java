@@ -62,4 +62,11 @@ public class IdMessage extends CallSignMessage {
       return this;
     }
   }
+
+@Override
+public String toString() {
+    return "IdMessage [toString()=" + super.toString() + "]";
+}
+
+
 }

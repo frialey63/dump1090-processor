@@ -67,4 +67,11 @@ public abstract class CallSignMessage extends BaseStationMessage {
       return self();
     }
   }
+
+@Override
+public String toString() {
+    return "CallSignMessage [callSign=" + callSign + ", toString()=" + super.toString() + "]";
+}
+
+
 }
