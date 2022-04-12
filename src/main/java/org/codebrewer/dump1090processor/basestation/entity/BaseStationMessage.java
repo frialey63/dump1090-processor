@@ -108,4 +108,11 @@ public abstract class BaseStationMessage {
      */
     protected abstract B self(); // Subclasses must override this method to return "this"
   }
+
+@Override
+public String toString() {
+    return "BaseStationMessage [id=" + id + ", icaoAddress=" + icaoAddress + ", timestamp=" + timestamp + "]";
+}
+
+
 }

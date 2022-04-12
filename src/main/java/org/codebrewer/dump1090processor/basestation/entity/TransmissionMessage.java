@@ -210,4 +210,14 @@ public class TransmissionMessage extends CallSignMessage {
       return self();
     }
   }
+
+@Override
+public String toString() {
+    return "TransmissionMessage [transmissionType=" + transmissionType + ", altitude=" + altitude + ", groundSpeed="
+            + groundSpeed + ", track=" + track + ", position=" + position + ", verticalRate=" + verticalRate
+            + ", squawk=" + squawk + ", alert=" + alert + ", emergency=" + emergency + ", identActive=" + identActive
+            + ", onGround=" + onGround + ", toString()=" + super.toString() + "]";
+}
+
+
 }

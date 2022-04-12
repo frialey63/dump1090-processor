@@ -82,4 +82,11 @@ public class StatusMessage extends BaseStationMessage {
       return this;
     }
   }
+
+@Override
+public String toString() {
+    return "StatusMessage [statusMessageType=" + statusMessageType + ", toString()=" + super.toString() + "]";
+}
+
+
 }

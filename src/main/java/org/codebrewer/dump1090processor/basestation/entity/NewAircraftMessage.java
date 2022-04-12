@@ -63,4 +63,11 @@ public class NewAircraftMessage extends BaseStationMessage {
       return this;
     }
   }
+
+@Override
+public String toString() {
+    return "NewAircraftMessage [toString()=" + super.toString() + "]";
+}
+
+
 }
