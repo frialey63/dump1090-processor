@@ -14,7 +14,7 @@
   </root>
 
 
-  <logger name="org.codebrewer.dump1090processor" level="debug">
+  <logger name="org.codebrewer.dump1090processor" level="info">
     <appender-ref ref="STDOUT" />
   </logger>
 
