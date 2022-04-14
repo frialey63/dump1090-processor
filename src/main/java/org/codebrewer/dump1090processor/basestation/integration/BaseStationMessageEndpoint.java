@@ -26,6 +26,8 @@ import org.codebrewer.dump1090processor.basestation.entity.BaseStationMessage;
 import org.codebrewer.dump1090processor.basestation.entity.TransmissionMessage;
 import org.codebrewer.dump1090processor.basestation.repository.AircraftRepository;
 import org.codebrewer.dump1090processor.basestation.repository.BaseStationMessageRepository;
+import org.geolatte.geom.G2D;
+import org.geolatte.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,23 +101,29 @@ public class BaseStationMessageEndpoint {
 
                 if (transmissionMessage.getTransmissionType() == TransmissionType.AIRBORNE_POSITION) {
                     String icaoAddress = transmissionMessage.getIcaoAddress();
-                    double lat = transmissionMessage.getPosition().getPosition().getLat();
-                    double lon = transmissionMessage.getPosition().getPosition().getLon();
+                    Point<G2D> position = transmissionMessage.getPosition();
 
-                    Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
-                    Aircraft aircraft;
+                    if (position != null) {
+                        double lat = position.getPosition().getLat();
+                        double lon = position.getPosition().getLon();
 
-                    if (optAircraft.isPresent()) {
-                        aircraft = optAircraft.get();
+                        Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
+                        Aircraft aircraft;
 
-                        aircraft.setLatitude(lat);
-                        aircraft.setLongitude(lon);
+                        if (optAircraft.isPresent()) {
+                            aircraft = optAircraft.get();
+
+                            aircraft.setLatitude(lat);
+                            aircraft.setLongitude(lon);
+                        } else {
+                            aircraft = new Aircraft(icaoAddress, lat, lon);
+                        }
+
+                        LOGGER.debug(aircraft.toString());
+                        aircraftRepository.save(aircraft);
                     } else {
-                        aircraft = new Aircraft(icaoAddress, lat, lon);
+                        LOGGER.warn("missing position from TransmissionMessage " + transmissionMessage);
                     }
-
-                    LOGGER.debug(aircraft.toString());
-                    aircraftRepository.save(aircraft);
                 }
             }
         }
