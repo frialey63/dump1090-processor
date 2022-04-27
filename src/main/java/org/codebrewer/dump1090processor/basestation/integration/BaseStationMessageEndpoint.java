@@ -106,6 +106,7 @@ public class BaseStationMessageEndpoint {
                     if (position != null) {
                         double lat = position.getPosition().getLat();
                         double lon = position.getPosition().getLon();
+                        long tov = System.currentTimeMillis();
 
                         Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
                         Aircraft aircraft;
@@ -115,8 +116,9 @@ public class BaseStationMessageEndpoint {
 
                             aircraft.setLatitude(lat);
                             aircraft.setLongitude(lon);
+                            aircraft.setTov(tov);
                         } else {
-                            aircraft = new Aircraft(icaoAddress, lat, lon);
+                            aircraft = new Aircraft(icaoAddress, lat, lon, tov);
                         }
 
                         LOGGER.debug(aircraft.toString());

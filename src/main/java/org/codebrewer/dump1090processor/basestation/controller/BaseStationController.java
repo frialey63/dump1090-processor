@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("aircraft")
 public class BaseStationController {
 
+    private static final long STALE_MILLIS = 2 * 60 * 1000;
+
     private final AircraftRepository aircraftRepository;
 
     @Autowired
@@ -26,7 +28,9 @@ public class BaseStationController {
     List<Aircraft> getAllAircraft() {
         List<Aircraft> result = new ArrayList<>();
 
-        aircraftRepository.findAll().forEach(result::add);
+        long tov = System.currentTimeMillis() - STALE_MILLIS;
+
+        aircraftRepository.findAllByTovGreaterThan(tov).forEach(result::add);
 
         return result;
     }
