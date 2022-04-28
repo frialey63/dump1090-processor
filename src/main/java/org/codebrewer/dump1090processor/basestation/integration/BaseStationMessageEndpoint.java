@@ -106,7 +106,7 @@ public class BaseStationMessageEndpoint {
                     if (position != null) {
                         double lat = position.getPosition().getLat();
                         double lon = position.getPosition().getLon();
-                        long tov = System.currentTimeMillis();
+                        long tov = transmissionMessage.getTimestamp().toEpochMilli();
 
                         Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
                         Aircraft aircraft;
