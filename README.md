@@ -10,6 +10,7 @@
 - BaseStationController which provides a getAllAircraft API to extract Aircraft from the store
 - the BaseStationMessage processing of BaseStationMessageEndpoint has been extended to store Aircraft
 - filled in some missing JUnit tests which required assertions in the style of org.assertj
+- fixed callSign population of the transmission (surveillance) message
 
 ## About
 

@@ -35,4 +35,13 @@ public class BaseStationController {
         return result;
     }
 
+    @GetMapping("/stale")
+    List<Aircraft> getStaleAircraft() {
+        List<Aircraft> result = new ArrayList<>();
+
+        aircraftRepository.findAllByTovGreaterThan(0).forEach(result::add);
+
+        return result;
+    }
+
 }

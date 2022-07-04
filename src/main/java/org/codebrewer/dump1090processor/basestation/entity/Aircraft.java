@@ -15,6 +15,8 @@ public class Aircraft {
 
     private long tov;
 
+    private String callSign;
+
     public Aircraft() {
         super();
     }
@@ -33,6 +35,14 @@ public class Aircraft {
 
     public void setIcaoAddress(String icaoAddress) {
         this.icaoAddress = icaoAddress;
+    }
+
+    public String getCallSign() {
+        return callSign;
+    }
+
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
     }
 
     public double getLatitude() {
@@ -61,7 +71,7 @@ public class Aircraft {
 
     @Override
     public String toString() {
-        return "Aircraft [icaoAddress=" + icaoAddress + ", latitude=" + latitude + ", longitude=" + longitude + ", tov=" + tov + "]";
+        return "Aircraft [icaoAddress=" + icaoAddress + ", callSign=" + callSign + ", latitude=" + latitude + ", longitude=" + longitude + ", tov=" + tov + "]";
     }
 
 }

@@ -23,6 +23,8 @@ import java.util.Optional;
 import org.codebrewer.dump1090processor.basestation.domain.TransmissionType;
 import org.codebrewer.dump1090processor.basestation.entity.Aircraft;
 import org.codebrewer.dump1090processor.basestation.entity.BaseStationMessage;
+import org.codebrewer.dump1090processor.basestation.entity.CallSignMessage;
+import org.codebrewer.dump1090processor.basestation.entity.IdMessage;
 import org.codebrewer.dump1090processor.basestation.entity.TransmissionMessage;
 import org.codebrewer.dump1090processor.basestation.repository.AircraftRepository;
 import org.codebrewer.dump1090processor.basestation.repository.BaseStationMessageRepository;
@@ -98,6 +100,7 @@ public class BaseStationMessageEndpoint {
 
             if (baseStationMessage instanceof TransmissionMessage) {
                 TransmissionMessage transmissionMessage = (TransmissionMessage) baseStationMessage;
+                LOGGER.debug(transmissionMessage.toString());
 
                 if (transmissionMessage.getTransmissionType() == TransmissionType.AIRBORNE_POSITION) {
                     String icaoAddress = transmissionMessage.getIcaoAddress();
@@ -125,6 +128,40 @@ public class BaseStationMessageEndpoint {
                         aircraftRepository.save(aircraft);
                     } else {
                         LOGGER.warn("missing position from TransmissionMessage " + transmissionMessage);
+                    }
+                } else if (transmissionMessage.getTransmissionType() == TransmissionType.SURVEILLANCE_ID) {
+                    String icaoAddress = transmissionMessage.getIcaoAddress();
+                    String callSign = transmissionMessage.getCallSign();
+
+                    Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
+
+                    if (optAircraft.isPresent()) {
+                        Aircraft aircraft = optAircraft.get();
+
+                        if ((callSign != null) && !callSign.isEmpty()) {
+                            aircraft.setCallSign(callSign);
+
+                            LOGGER.debug(aircraft.toString());
+                            aircraftRepository.save(aircraft);
+                        }
+                    }
+                }
+            } else if (baseStationMessage instanceof IdMessage) {
+                IdMessage idMessage = (IdMessage) baseStationMessage;
+                LOGGER.debug(idMessage.toString());
+
+                String icaoAddress = idMessage.getIcaoAddress();
+                String callSign = idMessage.getCallSign();
+
+                Optional<Aircraft> optAircraft = aircraftRepository.findById(icaoAddress);
+                if (optAircraft.isPresent()) {
+                    Aircraft aircraft = optAircraft.get();
+
+                    if ((callSign != null) && !callSign.isEmpty()) {
+                        aircraft.setCallSign(callSign);
+
+                        LOGGER.debug(aircraft.toString());
+                        aircraftRepository.save(aircraft);
                     }
                 }
             }

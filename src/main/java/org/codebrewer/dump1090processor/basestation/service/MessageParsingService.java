@@ -22,11 +22,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
 import org.codebrewer.dump1090processor.basestation.domain.DomainUtils;
 import org.codebrewer.dump1090processor.basestation.domain.MessageType;
 import org.codebrewer.dump1090processor.basestation.domain.StatusMessageType;
 import org.codebrewer.dump1090processor.basestation.domain.TransmissionType;
 import org.codebrewer.dump1090processor.basestation.entity.BaseStationMessage;
+import org.codebrewer.dump1090processor.basestation.entity.CallSignMessage;
 import org.codebrewer.dump1090processor.basestation.entity.IdMessage;
 import org.codebrewer.dump1090processor.basestation.entity.NewAircraftMessage;
 import org.codebrewer.dump1090processor.basestation.entity.StatusMessage;
@@ -122,6 +125,8 @@ public class MessageParsingService {
     final String[] tokens =
         StringUtils.commaDelimitedListToStringArray(StringUtils.trimWhitespace(csvMessageText));
 
+    LOGGER.debug(Arrays.toString(tokens));
+
     if (tokens.length == 0) {
       throw new IllegalArgumentException("Message token array has zero length");
     }
@@ -203,6 +208,8 @@ public class MessageParsingService {
                 .onGround(tokenAsBoolean(tokens[21]));
             break;
           case SURVEILLANCE_ID:
+              ((CallSignMessage.Builder) transmissionMessageBuilder).callSign(DomainUtils.getValidatedCallSign(tokens[10]));
+
             transmissionMessageBuilder
                 .altitude(tokenAsFloat(tokens[11]))
                 .squawk(tokenAsShort(tokens[17]))
